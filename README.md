@@ -48,6 +48,12 @@ Dokud tam soubor není, vykreslí se monogramový placeholder a **build nespadne
 Jakmile soubor přidáš, Astro z něj automaticky vygeneruje AVIF/WebP ve třech
 šířkách. Ideální zdroj: na výšku, min. 1200 px široký, obličej v horní třetině.
 
+## Náhled pro klienta
+
+Dokud není hosting, běží náhled na Cloudflare Pages — postup v
+[NAHLED.md](NAHLED.md). Náhledový build se **musí** spouštět
+s `PUBLIC_PREVIEW=true`, jinak dočasná adresa konkuruje ostré doméně.
+
 ## Deploy
 
 Push do `main` spustí workflow jen pro tu složku, která se změnila.
