@@ -60,14 +60,4 @@
     sync(next);
   });
 
-  // Systémové přepnutí respektujeme jen dokud si uživatel nevybral sám.
-  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem('parkoviste-theme');
-    } catch {
-      /* ignore */
-    }
-    if (!stored) sync(e.matches ? 'light' : 'dark');
-  });
 </script>
