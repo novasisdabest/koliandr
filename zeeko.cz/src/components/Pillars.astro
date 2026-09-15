@@ -3,15 +3,15 @@ import SectionHeading from './SectionHeading.astro';
 import { PILLARS } from '../data/content';
 ---
 
-<section id="specializace" class="border-t border-burgundy-900/50 bg-dark-800 py-24">
+<section id="specializace" class="border-t border-line bg-dark-800 py-24">
   <div class="mx-auto max-w-7xl px-6">
     <SectionHeading eyebrow="Co dělám" title="Na čem pracuji" aside="Čtyři klíčové pilíře praxe" />
 
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {
         PILLARS.map((pillar) => (
-          <article class="group rounded-3xl border border-burgundy-800/50 bg-dark-900 p-8 shadow-lg transition-all duration-300 hover:border-burgundy-500/80">
-            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-burgundy-600/50 bg-chip font-mono text-sm font-bold text-chip-ink">
+          <article class="group rounded-3xl border border-line-strong bg-dark-900 p-8 shadow-lg transition-all duration-300 hover:border-burgundy-500/80">
+            <span class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-chip-line bg-chip font-mono text-sm font-bold text-chip-ink">
               {pillar.number}
             </span>
             <h3 class="mt-6 text-xl font-bold text-white transition-colors group-hover:text-burgundy-300">

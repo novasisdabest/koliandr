@@ -3,24 +3,24 @@ import SectionHeading from './SectionHeading.astro';
 import { OPTIONS } from '../data/content';
 ---
 
-<section id="jak-to-funguje" class="border-t border-burgundy-900/50 bg-dark-800 py-24">
+<section id="jak-to-funguje" class="border-t border-line bg-dark-800 py-24">
   <div class="mx-auto max-w-7xl px-6">
     <SectionHeading eyebrow="Jak to funguje" title="Dvě cesty, jak zaparkovat" aside="Možnost A nebo B" />
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       {
         OPTIONS.map((option) => (
-          <article class="flex flex-col rounded-3xl border border-burgundy-800/50 bg-dark-900 p-8 shadow-lg transition-all duration-300 hover:border-burgundy-500/80 sm:p-10">
+          <article class="flex flex-col rounded-3xl border border-line-strong bg-dark-900 p-8 shadow-lg transition-all duration-300 hover:border-burgundy-500/80 sm:p-10">
             <span class="font-mono text-xs uppercase tracking-widest text-burgundy-400">
               {option.label}
             </span>
             <h3 class="mt-3 font-serif text-2xl font-bold text-white sm:text-3xl">{option.title}</h3>
             <p class="mt-4 leading-relaxed text-burgundy-100/80">{option.lead}</p>
 
-            <ol class="mt-8 space-y-4 border-t border-burgundy-900/50 pt-8">
+            <ol class="mt-8 space-y-4 border-t border-line pt-8">
               {option.steps.map((step, i) => (
                 <li class="flex gap-4">
-                  <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-burgundy-600/50 bg-chip font-mono text-[11px] font-bold text-chip-ink">
+                  <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-chip-line bg-chip font-mono text-[11px] font-bold text-chip-ink">
                     {i + 1}
                   </span>
                   <span class="text-sm leading-relaxed text-burgundy-100/70">{step}</span>
@@ -28,7 +28,7 @@ import { OPTIONS } from '../data/content';
               ))}
             </ol>
 
-            <p class="mt-8 rounded-2xl bg-gradient-to-r from-burgundy-900/30 to-transparent p-5 text-sm font-medium text-burgundy-200">
+            <p class="mt-8 rounded-2xl bg-gradient-to-r from-tint/30 to-transparent p-5 text-sm font-medium text-burgundy-200">
               {option.fitFor}
             </p>
           </article>

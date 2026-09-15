@@ -14,14 +14,14 @@ const faqSchema = {
 };
 ---
 
-<section id="otazky" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+<section id="otazky" class="border-t border-line bg-dark-900 py-24">
   <div class="mx-auto max-w-4xl px-6">
     <SectionHeading eyebrow="Časté otázky" title="Na co se lidé ptají" />
 
     <div class="space-y-3">
       {
         FAQ.map((item) => (
-          <details class="group rounded-2xl border border-burgundy-800/50 bg-dark-800 px-6 py-5 [&[open]]:border-burgundy-600/60">
+          <details class="group rounded-2xl border border-line-strong bg-dark-800 px-6 py-5 [&[open]]:border-burgundy-600/60">
             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white marker:content-none">
               {item.question}
               <span class="font-mono text-burgundy-400 transition-transform group-open:rotate-45">+</span>

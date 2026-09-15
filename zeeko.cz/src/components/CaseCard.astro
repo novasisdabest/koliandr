@@ -13,12 +13,12 @@ const metricTone: Record<string, string> = {
 
 {
   status === 'published' ? (
-    <article class="relative grid grid-cols-1 items-center gap-8 overflow-hidden rounded-3xl border border-burgundy-800/50 bg-dark-800 p-8 shadow-2xl sm:p-10 lg:grid-cols-12">
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-burgundy-900/20 to-transparent" />
+    <article class="relative grid grid-cols-1 items-center gap-8 overflow-hidden rounded-3xl border border-line-strong bg-dark-800 p-8 shadow-2xl sm:p-10 lg:grid-cols-12">
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-tint/20 to-transparent" />
 
       <div class="relative z-10 space-y-4 lg:col-span-7">
         <div class="flex items-center gap-3">
-          <span class="rounded-full border border-burgundy-700/50 bg-chip px-3 py-1 font-mono text-xs text-chip-ink">
+          <span class="rounded-full border border-line-soft bg-chip px-3 py-1 font-mono text-xs text-chip-ink">
             {index}
           </span>
           {location && <span class="font-mono text-xs text-burgundy-300/80">{location}</span>}
@@ -28,12 +28,12 @@ const metricTone: Record<string, string> = {
         {note && <p class="font-mono text-xs italic text-burgundy-400/80">{note}</p>}
       </div>
 
-      <dl class="relative z-10 space-y-3 rounded-2xl border border-burgundy-800/50 bg-dark-900 p-6 font-mono text-sm shadow-lg lg:col-span-5">
+      <dl class="relative z-10 space-y-3 rounded-2xl border border-line-strong bg-dark-900 p-6 font-mono text-sm shadow-lg lg:col-span-5">
         {metrics.map((metric, i) => (
           <div
             class:list={[
               'flex justify-between py-1.5',
-              i < metrics.length - 1 && 'border-b border-burgundy-900/50',
+              i < metrics.length - 1 && 'border-b border-line',
             ]}
           >
             <dt class="text-xs text-burgundy-300/80">{metric.label}</dt>
@@ -45,9 +45,9 @@ const metricTone: Record<string, string> = {
       </dl>
     </article>
   ) : (
-    <article class="grid grid-cols-1 items-center gap-8 rounded-3xl border border-dashed border-burgundy-800/50 bg-dark-800/50 p-8 sm:p-10 lg:grid-cols-12">
+    <article class="grid grid-cols-1 items-center gap-8 rounded-3xl border border-dashed border-line-strong bg-dark-800/50 p-8 sm:p-10 lg:grid-cols-12">
       <div class="space-y-3 lg:col-span-7">
-        <span class="inline-block rounded-full border border-burgundy-900/50 bg-dark-900 px-3 py-1 font-mono text-xs text-burgundy-300/60">
+        <span class="inline-block rounded-full border border-line bg-dark-900 px-3 py-1 font-mono text-xs text-burgundy-300/60">
           {index}
         </span>
         <h3 class="text-xl font-bold text-white/50">{title}</h3>

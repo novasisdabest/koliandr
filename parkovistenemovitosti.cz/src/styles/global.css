@@ -25,8 +25,10 @@
      okraj i jako tmavý konec gradientu tlačítka. Jedna proměnná to ve
      světlém režimu neuveze — tlačítko musí zůstat tmavě vínové, linka ne. */
   --color-line: var(--t-line);
+  --color-line-deep: var(--t-line-deep);
   --color-line-strong: var(--t-line-strong);
   --color-line-soft: var(--t-line-soft);
+  --color-line-faint: var(--t-line-faint);
 
   /* Plochy */
   --color-dark-700: var(--t-dark-700); /* karty */
@@ -54,6 +56,12 @@
      tlačítka, zatímco čip má na papíře zesvětlat. */
   --color-chip: var(--t-chip);
   --color-chip-ink: var(--t-chip-ink);
+  --color-chip-line: var(--t-chip-line);
+
+  /* Rozostřené záře a jemné nádechy na kartách. V tmavém režimu vínová
+     tma, ve světlém světlá vínová — jinak by z nich byl šedý opar. */
+  --color-glow: var(--t-glow);
+  --color-tint: var(--t-tint);
   --color-shade: var(--t-shade);
 
   --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -103,56 +111,92 @@
   --t-shade: #000000;
 
   /* shodné s původním border-burgundy-900/50 resp. -800/50 a -700/50 */
+  /* každá hodnota odpovídá původní třídě 1:1 — viz komentář u světlé verze */
   --t-line: rgb(64 14 24 / 0.5);
+  --t-line-deep: rgb(64 14 24 / 0.8);
   --t-line-strong: rgb(90 25 38 / 0.5);
   --t-line-soft: rgb(110 27 44 / 0.5);
+  --t-line-faint: rgb(110 27 44 / 0.3);
 
   /* shodné s původním bg-burgundy-900/80 + text-burgundy-200 */
   --t-chip: rgb(64 14 24 / 0.8);
   --t-chip-ink: #f4c5cd;
+  --t-chip-line: rgb(140 36 56 / 0.5);
+
+  --t-glow: #400e18;
+  --t-tint: #400e18;
+
+  /* Stíny jako celé hodnoty, ne jen barva — světlý režim potřebuje
+     jinou intenzitu i rozptyl, ne jen jiný odstín. */
+  --t-shadow-book: 0 30px 60px -15px rgb(0 0 0 / 0.9);
+  --t-shadow-photo: inset 0 0 50px rgb(0 0 0 / 0.5);
+  --t-shadow-btn:
+    0 20px 25px -5px rgb(0 0 0 / 0.5),
+    0 8px 10px -6px rgb(0 0 0 / 0.5);
+  --t-shadow-card: none;
+  --t-crease: 10 2 4;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
 
-  /* Vínová zůstává značkou. Světlé odstíny (50–300) se ale v tmavém režimu
-     používají jako TEXT — tady musí ztmavnout, jinak zmizí na papíře. */
-  --t-burgundy-50: #24070d;
-  --t-burgundy-100: #2c181c;
-  --t-burgundy-200: #342024;
-  --t-burgundy-300: #3d272c;
+  /* Paleta podle předlohy: bílá / #faf7f7 / #f5efef / okraj #e5dbdc /
+     text #3a2d2f / nadpisy #1a0b0e. Vínová zůstává vínová — je to značka,
+     ne jen dekorace, takže popisky a odkazy jsou #8c2438, ne černé. */
+  --t-burgundy-50: #1a0b0e;
+  --t-burgundy-100: #1a0b0e;
+  --t-burgundy-200: #2b1f21;
+  --t-burgundy-300: #4a3a3d;
   --t-burgundy-400: #8c2438;
-  --t-burgundy-500: #a33448;
+  --t-burgundy-500: #8c2438;
   --t-burgundy-600: #8c2438;
   --t-burgundy-700: #6e1b2c;
-  --t-burgundy-800: #f2e3e6;
+  --t-burgundy-800: #5a1926;
   --t-burgundy-900: #400e18;
-  --t-burgundy-950: #fdf2f4;
+  --t-burgundy-950: #2b070f;
 
-  --t-dark-700: #ebe0e2;
-  --t-dark-800: #f4eeee;
-  --t-dark-900: #fbf8f8;
-  --t-dark-950: #ece2e3;
+  /* Tmavá hierarchie ploch se mapuje 1:1 na světlou:
+     900 (základ) → bílá, 800 (střídavá sekce) → #faf7f7, karta → bílá. */
+  --t-dark-700: #f5efef;
+  --t-dark-800: #faf7f7;
+  --t-dark-900: #ffffff;
+  --t-dark-950: #ffffff;
 
-  --t-paper-900: #f7f1f1;
-  --t-paper-800: #f0e8e8;
-  --t-paper-700: #fffdfd;
-  --t-paper-600: #fff7f7;
-  --t-paper-500: #e0d3d5;
+  --t-paper-900: #faf7f7;
+  --t-paper-800: #f5efef;
+  --t-paper-700: #ffffff;
+  --t-paper-600: #ffffff;
+  --t-paper-500: #f5efef;
 
-  --t-white: #24070d;
-  --t-slate-200: #3a2b2e;
-  --t-slate-300: #5c4a4e;
-  --t-slate-400: #7a666a;
+  --t-white: #1a0b0e;
+  --t-slate-200: #3a2d2f;
+  --t-slate-300: #3a2d2f;
+  --t-slate-400: #6b5a5c;
   --t-shade: #5a1926;
 
-  --t-line: rgb(90 25 38 / 0.14);
-  --t-line-strong: rgb(90 25 38 / 0.2);
-  --t-line-soft: rgb(90 25 38 / 0.16);
+  /* Okraje jsou ve světlém režimu vidět — plná barva, ne alfa. */
+  --t-line: #e5dbdc;
+  --t-line-deep: #dccfd1;
+  --t-line-strong: #e5dbdc;
+  --t-line-soft: #ece3e4;
+  --t-line-faint: #f0e9ea;
 
   --t-chip: #fbe7ea;
-  --t-chip-ink: #6e1b2c;
+  --t-chip-ink: #5a1926;
+  --t-chip-line: #f4c5cd;
+
+  --t-glow: #f4c5cd;
+  --t-tint: #fdf2f4;
+
+  --t-shadow-book: 0 20px 50px -10px rgb(0 0 0 / 0.08);
+  --t-shadow-photo: inset 0 0 40px rgb(0 0 0 / 0.08);
+  --t-shadow-btn:
+    0 4px 6px -1px rgb(64 14 24 / 0.16),
+    0 2px 4px -2px rgb(64 14 24 / 0.1);
+  --t-shadow-card: 0 1px 2px 0 rgb(64 14 24 / 0.06);
+  --t-crease: 100 90 90;
 }
+
 
 @layer base {
   ::selection {
@@ -212,13 +256,30 @@
 
 @layer components {
   /* Stín „hřbetu knihy“ na pravé (fotografické) straně heru */
+  /* Stíny řízené tématem. Natvrdo zapsaná rgba by ve světlém režimu
+     zůstala černá a kniha by na papíře vypadala jako díra. */
+  .elevation-book {
+    box-shadow: var(--t-shadow-book);
+  }
+  .elevation-btn {
+    box-shadow: var(--t-shadow-btn);
+  }
+  .elevation-card {
+    box-shadow: var(--t-shadow-card);
+  }
+  .photo-inset {
+    box-shadow: var(--t-shadow-photo);
+  }
+
   .book-shadow {
     box-shadow:
-      -20px 0 30px -15px rgb(0 0 0 / 0.8),
+      -20px 0 30px -15px color-mix(in oklab, var(--color-shade) 80%, transparent),
       inset 10px 0 20px -10px rgb(255 255 255 / 0.05);
   }
 
-  /* Ohyb mezi levou a pravou stránkou — jen na desktopu, kde jsou vedle sebe */
+  /* Ohyb mezi stránkami — jen na desktopu, kde jsou vedle sebe.
+     --t-crease drží RGB složky, aby šlo ve světlém režimu použít šedou
+     místo černé, jinak by byl ohyb tvrdý jako škrt fixou. */
   @media (min-width: 1024px) {
     .book-crease {
       position: relative;
@@ -235,13 +296,13 @@
       filter: blur(2px);
       background: linear-gradient(
         to right,
-        rgb(0 0 0 / 0) 0%,
-        rgb(10 2 4 / 0.4) 20%,
-        rgb(10 2 4 / 0.7) 45%,
-        rgb(0 0 0 / 1) 50%,
-        rgb(10 2 4 / 0.7) 55%,
-        rgb(10 2 4 / 0.4) 80%,
-        rgb(0 0 0 / 0) 100%
+        rgb(var(--t-crease) / 0) 0%,
+        rgb(var(--t-crease) / 0.2) 20%,
+        rgb(var(--t-crease) / 0.4) 45%,
+        rgb(var(--t-crease) / 0.6) 50%,
+        rgb(var(--t-crease) / 0.4) 55%,
+        rgb(var(--t-crease) / 0.2) 80%,
+        rgb(var(--t-crease) / 0) 100%
       );
     }
   }
