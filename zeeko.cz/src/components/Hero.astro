@@ -51,7 +51,9 @@ const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
           <h1
             class="font-serif text-4xl font-extrabold leading-[1.1] tracking-tight text-burgundy-50 sm:text-5xl lg:text-[clamp(3.5rem,7vh,6rem)]"
           >
-            Nemovitosti jsou moje práce.<br />
+            <!-- &nbsp; drží dvojici pohromadě: „moje" nikdy nezůstane samo
+                 na konci řádku. Zalomit jinde v té větě prohlížeč pořád smí. -->
+            Nemovitosti jsou moje&nbsp;práce.<br />
             <span
               class="bg-gradient-to-r from-burgundy-300 to-burgundy-100 bg-clip-text font-serif italic text-transparent"
             >
