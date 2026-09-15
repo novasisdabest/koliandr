@@ -16,43 +16,66 @@ konkurovala ostré doméně jako duplicitní obsah.
 
 ## Nastavení (jednorázově, ~5 minut na projekt)
 
+Cloudflare dnes vede i statické weby přes **Workers Builds** (průvodce
+říká „Configure your Worker project"). Proti staršímu Pages flow to má
+dva rozdíly: je potřeba `wrangler.jsonc` v repozitáři (už tam je) a
+**Root directory**, jinak se build spustí v kořeni, kde žádný
+`package.json` není.
+
 1. <https://dash.cloudflare.com> → **Workers & Pages** → **Create** →
-   záložka **Pages** → **Connect to Git** → vybrat `novasisdabest/koliandr`.
+   **Import a repository** → `novasisdabest/koliandr`.
 
-   Musí to být cesta „Connect to Git" nad **existujícím** repozitářem.
-   Průvodce „Import a repository" / šablony se pokouší repozitář
-   **založit** a skončí chybou *„Cloudflare could not create the Git
-   repository right now."* — to není výpadek Cloudflare, jen špatná
-   větev průvodce.
-
-   Pokud se `koliandr` v seznamu nenabízí: je privátní a aplikace
-   Cloudflare k němu nemá přístup. GitHub → Settings → Applications →
-   **Cloudflare Pages** → Configure → *Only select repositories* →
-   přidat `koliandr` → Save. Pak se v Cloudflare seznam obnoví.
+   Pokud se repozitář nenabízí, je privátní a aplikace Cloudflare k němu
+   nemá přístup: GitHub → Settings → Applications → Cloudflare →
+   Configure → *Only select repositories* → přidat `koliandr`.
 
 2. Vyplnit:
 
    | Pole | zeeko.cz | parkovistenemovitosti.cz |
    | --- | --- | --- |
    | Project name | `zeeko-nahled` | `parkoviste-nahled` |
-   | Production branch | `main` | `main` |
-   | Framework preset | None | None |
-   | Build command | `npm ci && npm run build` | `npm ci && npm run build` |
-   | Build output directory | `dist` | `dist` |
    | **Root directory** | `zeeko.cz` | `parkovistenemovitosti.cz` |
+   | Build command | `npm ci && npm run build` | `npm ci && npm run build` |
+   | Deploy command | `npx wrangler deploy` | `npx wrangler deploy` |
 
-   Root directory je to podstatné — bez něj se Cloudflare pokusí stavět
-   kořen repozitáře, kde žádný `package.json` není.
+   Root directory bývá schovaný pod **Advanced settings**. Bez něj build
+   spadne na chybějícím `package.json`.
 
-3. **Environment variables** → Add:
+3. **Build variables**:
 
    | Proměnná | Hodnota |
    | --- | --- |
    | `PUBLIC_PREVIEW` | `true` |
-   | `NODE_VERSION` | `22` |
 
-4. **Save and Deploy**. Za ~2 minuty dostaneš adresu
-   `https://zeeko-nahled.pages.dev`, druhý projekt obdobně.
+   Musí to být *build* proměnná — Astro ji čte při buildu, ne za běhu.
+
+4. **API token**: nechat Cloudflare vytvořit nový. Token z jiného
+   projektu obvykle nemá potřebná oprávnění a průvodce na to upozorní
+   žlutou hláškou.
+
+5. Odškrtnout **Builds for non-production branches**, pokud nechceš
+   nasazení z každé větve. Náhled běží z `main`.
+
+6. **Deploy**. Adresa bude `https://zeeko-nahled.<účet>.workers.dev`.
+
+### Co je v `wrangler.jsonc`
+
+```jsonc
+{
+  "name": "zeeko-nahled",
+  "compatibility_date": "2026-09-15",
+  "assets": { "directory": "./dist/", "not_found_handling": "404-page" }
+}
+```
+
+Assets-only Worker: žádný `main`, žádný skript. Requesty obsluhuje
+přímo síť Cloudflare, Worker se nespouští, takže se za ně nic neúčtuje.
+`not_found_handling` zařídí, že neexistující adresa vrátí naši
+`404.html` se správným stavem 404.
+
+**Pozor:** `public/.htaccess` je jen pro Apache na Active24. Na
+Cloudflare nedělá nic — bezpečnostní hlavičky a cache pravidla tam
+neplatí. Pro náhled to nevadí, na ostrém hostingu se použijí.
 
 ## Co poslat klientovi
 
@@ -97,16 +120,6 @@ dosah — naše buildy mají 21 a 18 souborů, největší 83 kB.
 
 **`PUBLIC_PREVIEW=true` tady musíš napsat ručně** — tahle cesta nezná
 proměnné z nastavení projektu v dashboardu.
-
-## Wrangler konfigurace: nepřidávat
-
-V logu buildu se objeví *„No Wrangler configuration detected. Cloudflare
-will attempt automatic project configuration."* Je to informace, ne
-chyba — statický web žádný `wrangler.toml` nepotřebuje.
-
-Přidávat ho je spíš na škodu: jakmile existuje, stává se zdrojem pravdy
-a odpovídající pole v dashboardu zšednou jen na čtení. Build command,
-výstupní adresář i root directory by se pak musely spravovat v souboru.
 
 ## Alternativa na jedno odpoledne
 

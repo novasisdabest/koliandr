@@ -1,0 +1,14 @@
+{
+  // Workers Builds spouští `npx wrangler deploy`, které bez tohoto souboru
+  // neví, co nasadit. Pro čistě statický web stačí assets-only Worker —
+  // žádný `main`, žádný skript, takže se Worker vůbec nespouští a nic se
+  // neúčtuje za requesty.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "parkoviste-nahled",
+  "compatibility_date": "2026-09-15",
+  "assets": {
+    "directory": "./dist/",
+    // Nenalezená adresa vrátí naši 404.html se stavem 404
+    "not_found_handling": "404-page"
+  }
+}
