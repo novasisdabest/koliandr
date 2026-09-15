@@ -60,6 +60,11 @@
 
   /* Rozostřené záře a jemné nádechy na kartách. V tmavém režimu vínová
      tma, ve světlém světlá vínová — jinak by z nich byl šedý opar. */
+  /* Zvýrazněná fráze v nadpisu. Nemůže brát burgundy-300/100 — ty jsou ve
+     světlém režimu inkousty, takže by z gradientu byla šeď. */
+  --color-hero-from: var(--t-hero-from);
+  --color-hero-to: var(--t-hero-to);
+
   --color-glow: var(--t-glow);
   --color-tint: var(--t-tint);
   --color-shade: var(--t-shade);
@@ -123,6 +128,9 @@
   --t-chip-ink: #f4c5cd;
   --t-chip-line: rgb(140 36 56 / 0.5);
 
+  --t-hero-from: #ea9caa;
+  --t-hero-to: #fbe7ea;
+
   --t-glow: #400e18;
   --t-tint: #400e18;
 
@@ -184,6 +192,9 @@
   --t-chip: #fbe7ea;
   --t-chip-ink: #5a1926;
   --t-chip-line: #f4c5cd;
+
+  --t-hero-from: #6e1b2c;
+  --t-hero-to: #c65b6c;
 
   --t-glow: #f4c5cd;
   --t-tint: #fdf2f4;

@@ -13,13 +13,19 @@ const found = import.meta.glob<{ default: ImageMetadata }>(
 const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
 ---
 
+<!-- overflow-x-clip, ne overflow-hidden: `hidden` ořízne i svisle a ustřihne
+     stín knihy hned pod její spodní hranou. `clip` na jedné ose nechá druhou
+     viditelnou, takže stín může přetéct do další sekce. Dekorace mají vlastní
+     obal s overflow-hidden, aby záře zůstala oříznutá přesně jako dosud. -->
 <section
-  class="relative overflow-hidden bg-paper-900 pb-16 pt-8 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-stretch lg:py-[clamp(1.5rem,3vh,3rem)]"
+  class="relative overflow-x-clip bg-paper-900 pb-16 pt-8 lg:flex lg:min-h-[calc(100svh-5rem)] lg:items-stretch lg:py-[clamp(1.5rem,3vh,3rem)]"
 >
-  <div class="texture-grain pointer-events-none absolute inset-0 opacity-10 mix-blend-screen"></div>
-  <div
-    class="pointer-events-none absolute left-1/4 top-0 h-[800px] w-[800px] rounded-full bg-glow/20 blur-[150px]"
-  >
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="texture-grain absolute inset-0 opacity-10 mix-blend-screen"></div>
+    <div
+      class="absolute left-1/4 top-0 h-[800px] w-[800px] rounded-full bg-glow/20 blur-[150px]"
+    >
+    </div>
   </div>
 
   <div class="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:flex lg:items-stretch">
@@ -55,7 +61,7 @@ const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
                  na konci řádku. Zalomit jinde v té větě prohlížeč pořád smí. -->
             Nemovitosti jsou moje&nbsp;práce.<br />
             <span
-              class="bg-gradient-to-r from-burgundy-300 to-burgundy-100 bg-clip-text font-serif italic text-transparent"
+              class="bg-gradient-to-r from-hero-from to-hero-to bg-clip-text font-serif italic text-transparent"
             >
               Složité případy
             </span><br />

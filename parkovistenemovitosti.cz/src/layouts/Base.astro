@@ -56,20 +56,21 @@ const serviceSchema = {
     <meta property="og:locale" content="cs_CZ" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <meta name="theme-color" content="#1a0b0e" />
+    <meta name="theme-color" content="#1a0b0e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbf8f8" media="(prefers-color-scheme: light)" />
 
     <!-- Musí běžet PŘED prvním vykreslením, jinak tmavý web blikne i tomu,
          kdo má uloženou světlou variantu. Proto inline a synchronní. -->
     <script is:inline>
       (() => {
-        // Tmavá je výchozí záměrně — návrh je na ni stavěný a značka s ní
-        // pracuje. Systémové nastavení se NEsleduje; světlou dostane jen
-        // ten, kdo si ji sám přepne. Volba pak přežije i zavření prohlížeče.
+        // Bez vlastní volby se řídíme nastavením systému; tmavá je záloha,
+        // když systém preferenci nehlásí. Vlastní volba má přednost vždy.
         let stored = null;
         try {
           stored = localStorage.getItem('parkoviste-theme');
         } catch {}
-        document.documentElement.dataset.theme = stored === 'light' ? 'light' : 'dark';
+        const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = stored === 'light' || stored === 'dark' ? stored : system;
       })();
     </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

@@ -60,4 +60,16 @@
     sync(next);
   });
 
+
+  // Systémové přepnutí (např. macOS po západu slunce) respektujeme jen
+  // dokud si uživatel nevybral sám — vlastní volba se nesmí přebít.
+  window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('parkoviste-theme');
+    } catch {
+      /* private mode */
+    }
+    if (stored !== 'light' && stored !== 'dark') sync(e.matches ? 'light' : 'dark');
+  });
 </script>
