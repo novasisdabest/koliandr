@@ -17,7 +17,18 @@ konkurovala ostré doméně jako duplicitní obsah.
 ## Nastavení (jednorázově, ~5 minut na projekt)
 
 1. <https://dash.cloudflare.com> → **Workers & Pages** → **Create** →
-   **Pages** → **Connect to Git** → vybrat repozitář `koliandr`.
+   záložka **Pages** → **Connect to Git** → vybrat `novasisdabest/koliandr`.
+
+   Musí to být cesta „Connect to Git" nad **existujícím** repozitářem.
+   Průvodce „Import a repository" / šablony se pokouší repozitář
+   **založit** a skončí chybou *„Cloudflare could not create the Git
+   repository right now."* — to není výpadek Cloudflare, jen špatná
+   větev průvodce.
+
+   Pokud se `koliandr` v seznamu nenabízí: je privátní a aplikace
+   Cloudflare k němu nemá přístup. GitHub → Settings → Applications →
+   **Cloudflare Pages** → Configure → *Only select repositories* →
+   přidat `koliandr` → Save. Pak se v Cloudflare seznam obnoví.
 
 2. Vyplnit:
 
@@ -62,6 +73,40 @@ konkurovala ostré doméně jako duplicitní obsah.
 2. Spustit workflow *Deploy zeeko.cz*.
 3. Náhledové projekty v Cloudflare **smazat** — dvě živé kopie téhož
    webu jsou zbytečné riziko, i s `noindex`.
+
+## Když Git integrace nejde
+
+Nahrání složky přímo, bez napojení na repozitář. Funguje hned, jen se
+neaktualizuje samo — po každé změně příkaz zopakuj.
+
+```bash
+npx wrangler login          # jednorázově, otevře prohlížeč
+
+cd zeeko.cz
+PUBLIC_PREVIEW=true npm run build
+npx wrangler pages deploy dist --project-name zeeko-nahled
+
+cd ../parkovistenemovitosti.cz
+PUBLIC_PREVIEW=true npm run build
+npx wrangler pages deploy dist --project-name parkoviste-nahled
+```
+
+Projekt se při prvním nasazení založí sám (zeptá se na název a
+produkční větev). Limity 20 000 souborů / 25 MiB na soubor jsou mimo
+dosah — naše buildy mají 21 a 18 souborů, největší 83 kB.
+
+**`PUBLIC_PREVIEW=true` tady musíš napsat ručně** — tahle cesta nezná
+proměnné z nastavení projektu v dashboardu.
+
+## Wrangler konfigurace: nepřidávat
+
+V logu buildu se objeví *„No Wrangler configuration detected. Cloudflare
+will attempt automatic project configuration."* Je to informace, ne
+chyba — statický web žádný `wrangler.toml` nepotřebuje.
+
+Přidávat ho je spíš na škodu: jakmile existuje, stává se zdrojem pravdy
+a odpovídající pole v dashboardu zšednou jen na čtení. Build command,
+výstupní adresář i root directory by se pak musely spravovat v souboru.
 
 ## Alternativa na jedno odpoledne
 
