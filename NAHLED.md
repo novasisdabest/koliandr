@@ -34,12 +34,13 @@ dva rozdíly: je potřeba `wrangler.jsonc` v repozitáři (už tam je) a
    | Pole | zeeko.cz | parkovistenemovitosti.cz |
    | --- | --- | --- |
    | Project name | `zeeko-nahled` | `parkoviste-nahled` |
-   | **Root directory** | `zeeko.cz` | `parkovistenemovitosti.cz` |
+   | **Path** (root directory) | `zeeko.cz` | `parkovistenemovitosti.cz` |
    | Build command | `npm ci && npm run build` | `npm ci && npm run build` |
    | Deploy command | `npx wrangler deploy` | `npx wrangler deploy` |
 
-   Root directory bývá schovaný pod **Advanced settings**. Bez něj build
-   spadne na chybějícím `package.json`.
+   Pole se v průvodci jmenuje **Path**, ne „Root directory", a je
+   předvyplněné `/`. Je hned nad výběrem API tokenu. Bez změny se build
+   spustí v kořeni repozitáře a spadne na chybějícím `package.json`.
 
 3. **Build variables**:
 
