@@ -1,0 +1,37 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { FAQ } from '../data/content';
+
+// FAQPage schema pomáhá ke zobrazení otázek přímo ve výsledcích vyhledávání.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ.filter((item) => !item.answer.startsWith('TODO')).map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: { '@type': 'Answer', text: item.answer },
+  })),
+};
+---
+
+<section id="otazky" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+  <div class="mx-auto max-w-4xl px-6">
+    <SectionHeading eyebrow="Časté otázky" title="Na co se lidé ptají" />
+
+    <div class="space-y-3">
+      {
+        FAQ.map((item) => (
+          <details class="group rounded-2xl border border-burgundy-800/50 bg-dark-800 px-6 py-5 [&[open]]:border-burgundy-600/60">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white marker:content-none">
+              {item.question}
+              <span class="font-mono text-burgundy-400 transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class="mt-4 text-sm leading-relaxed text-burgundy-100/70">{item.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+</section>

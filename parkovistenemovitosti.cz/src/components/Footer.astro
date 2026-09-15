@@ -1,0 +1,58 @@
+---
+import { SITE, CONTACT, NAV } from '../data/site';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-burgundy-900/80 bg-dark-950 py-16 text-sm text-burgundy-300/60">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:grid-cols-4">
+    <div class="space-y-4">
+      <a href="#top" class="text-base font-extrabold tracking-tight text-white">
+        <span class="text-burgundy-500">P</span>arkoviště nemovitostí
+      </a>
+      <p class="font-mono text-xs text-burgundy-300/50">
+        Projekt {SITE.owner}<br />Výkup · nájem · zpětný odkup · zajištěná zápůjčka
+      </p>
+    </div>
+
+    <nav class="space-y-3" aria-label="Navigace v patičce">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Na webu</h2>
+      <ul class="space-y-2 text-xs">
+        {NAV.map((item) => (
+          <li><a href={item.href} class="transition-colors hover:text-white">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="space-y-3">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Kontakt</h2>
+      <ul class="space-y-2 text-xs">
+        <li><a href={CONTACT.phoneHref} class="transition-colors hover:text-white">{CONTACT.phoneDisplay}</a></li>
+        <li><a href={`mailto:${CONTACT.email}`} class="transition-colors hover:text-white">{CONTACT.email}</a></li>
+        <li>
+          <a href={CONTACT.zeeko} class="transition-colors hover:text-burgundy-400">zeeko.cz</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="space-y-3">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Právní informace</h2>
+      <p class="text-xs leading-relaxed text-burgundy-300/40">
+        Obsah tohoto webu je informativní a nepředstavuje návrh na uzavření smlouvy ani právní
+        poradenství. Konkrétní podmínky vždy vycházejí z posouzení jednotlivého případu a ze smluvní
+        dokumentace připravené advokátem.
+        <!-- TODO(Zdeněk): před spuštěním nechat právně posoudit, zda činnost podle „Možnosti B"
+             nespadá pod zákon č. 257/2016 Sb. o spotřebitelském úvěru (zápůjčka zajištěná
+             nemovitostí poskytnutá spotřebiteli vyžaduje oprávnění ČNB). Text patičky i sekce
+             „Jak to funguje" se podle výsledku musí upravit. -->
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between border-t border-burgundy-900/50 px-6 pt-8 text-xs text-burgundy-300/40 sm:flex-row"
+  >
+    <span>&copy; {currentYear} {SITE.name} — {SITE.owner}.</span>
+    <span class="mt-2 font-mono sm:mt-0">parkovistenemovitosti.cz</span>
+  </div>
+</footer>

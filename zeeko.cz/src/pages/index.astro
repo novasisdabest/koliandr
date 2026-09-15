@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Bifurcation from '../components/Bifurcation.astro';
+import About from '../components/About.astro';
+import Pillars from '../components/Pillars.astro';
+import Cases from '../components/Cases.astro';
+import KnowHow from '../components/KnowHow.astro';
+import Parkoviste from '../components/Parkoviste.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="ZEEKO | Zdeněk Koliandr — Nemovitosti. Investice. Složité případy."
+  description="Více než 20 let praxe s nemovitostmi zatíženými exekucemi, zástavami, dluhy a insolvencí. Investor a vyjednavač, který řeší případy, kde nestačí podívat se na cenu a list vlastnictví."
+>
+  <Header />
+  <main id="top">
+    <Hero />
+    <Bifurcation />
+    <About />
+    <Pillars />
+    <Cases />
+    <KnowHow />
+    <Parkoviste />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

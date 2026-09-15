@@ -1,0 +1,83 @@
+---
+import WhatsAppButton from './WhatsAppButton.astro';
+import { NAV } from '../data/site';
+---
+
+<header class="sticky top-0 z-50 border-b border-burgundy-900/50 bg-dark-900/80 backdrop-blur-xl">
+  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+    <a href="#top" class="flex items-center gap-2 text-base font-extrabold tracking-tight text-white sm:text-lg">
+      <span class="text-burgundy-500">P</span>arkoviště nemovitostí
+    </a>
+
+    <nav aria-label="Hlavní navigace" class="hidden items-center gap-1 text-sm font-medium text-slate-300 lg:flex">
+      {
+        NAV.map((item) => (
+          <a href={item.href} class="rounded-full px-4 py-2 transition-all hover:bg-white/5 hover:text-white">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <!-- Obal řídí viditelnost: `hidden sm:inline-flex` přímo na tlačítku
+           prohrává s `inline-flex` z varianty, protože Tailwind řadí
+           display utility podle své osnovy, ne podle pořadí v atributu. -->
+      <span class="hidden sm:inline-block">
+        <WhatsAppButton />
+      </span>
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Otevřít menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="rounded-full border border-white/10 bg-white/5 p-2.5 text-slate-300 hover:text-white lg:hidden"
+      >
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" hidden class="space-y-2 border-b border-burgundy-900/50 bg-dark-800 px-6 pb-6 pt-2 lg:hidden">
+    {
+      NAV.map((item) => (
+        <a href={item.href} class="block rounded-xl px-4 py-2.5 text-burgundy-100 hover:bg-white/5 hover:text-white">
+          {item.label}
+        </a>
+      ))
+    }
+    <div class="pt-2">
+      <WhatsAppButton variant="block" label="Napsat na WhatsApp" />
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  if (btn && menu) {
+    const setOpen = (open: boolean): void => {
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Zavřít menu' : 'Otevřít menu');
+    };
+
+    btn.addEventListener('click', () => setOpen(menu.hidden));
+    menu.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        btn.focus();
+      }
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

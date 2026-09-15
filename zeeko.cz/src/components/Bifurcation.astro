@@ -1,0 +1,68 @@
+---
+// Rozcestník: investor vs. majitel s problémem. Dvě různé cesty webem.
+const ROUTES = [
+  {
+    href: '#o-mne',
+    eyebrow: 'Jsem investor',
+    title: 'Chci znát Zdeňka, jeho zkušenosti, případy a know-how',
+    cta: 'Vstoupit do profilu',
+    accent: false,
+  },
+  {
+    href: '#parkoviste',
+    eyebrow: 'Řeším problém s nemovitostí',
+    title: 'Chci se dostat na Parkoviště nemovitostí',
+    cta: 'Zobrazit možnosti řešení',
+    accent: true,
+  },
+] as const;
+---
+
+<section class="bg-paper-900 pb-16 pt-8">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {
+        ROUTES.map((route) => (
+          <a
+            href={route.href}
+            class:list={[
+              'group relative overflow-hidden rounded-3xl border p-8 shadow-xl transition-all duration-300',
+              route.accent
+                ? 'border-burgundy-600/40 bg-gradient-to-br from-burgundy-900/80 to-dark-800 hover:border-burgundy-500'
+                : 'border-burgundy-900/50 bg-dark-800 hover:border-burgundy-600/50',
+            ]}
+          >
+            <div
+              class:list={[
+                'absolute right-0 top-0 h-32 w-32 rounded-full blur-2xl transition-all',
+                route.accent
+                  ? 'bg-burgundy-500/20 group-hover:bg-burgundy-500/30'
+                  : 'bg-burgundy-600/5 group-hover:bg-burgundy-600/15',
+              ]}
+            />
+            <p
+              class:list={[
+                'font-mono text-xs uppercase tracking-wider',
+                route.accent ? 'text-burgundy-300' : 'text-burgundy-300/70',
+              ]}
+            >
+              {route.eyebrow}
+            </p>
+            <h3 class="mt-2 text-xl font-bold text-white transition-colors group-hover:text-burgundy-200">
+              {route.title}
+            </h3>
+            <div
+              class:list={[
+                'mt-6 flex items-center gap-2 text-sm font-semibold group-hover:text-white',
+                route.accent ? 'text-burgundy-200' : 'text-burgundy-200/70',
+              ]}
+            >
+              <span>{route.cta}</span>
+              <span class="font-mono transition-transform group-hover:translate-x-1">&rarr;</span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

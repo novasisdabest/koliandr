@@ -1,0 +1,71 @@
+---
+import '../styles/fonts.css';
+import '../styles/global.css';
+
+import { SITE, CONTACT } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { title, description, ogImage = '/og-parkoviste.jpg', noindex = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: SITE.name,
+  serviceType: 'Řešení nemovitostí zatížených dluhy, exekucemi a zástavami',
+  provider: {
+    '@type': 'Person',
+    name: SITE.owner,
+    url: CONTACT.zeeko,
+    telephone: CONTACT.phoneDisplay,
+  },
+  areaServed: { '@type': 'Country', name: 'Česká republika' },
+  url: SITE.url,
+};
+---
+
+<!doctype html>
+<html lang="cs" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="cs_CZ" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#1a0b0e" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+  </head>
+  <body
+    class="bg-dark-900 font-sans text-slate-200 antialiased selection:bg-burgundy-600 selection:text-white"
+  >
+    <a
+      href="#top"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-burgundy-600 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+    >
+      Přeskočit na obsah
+    </a>
+    <slot />
+  </body>
+</html>

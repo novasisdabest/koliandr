@@ -1,0 +1,62 @@
+---
+import { SITE, CONTACT } from '../data/site';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-burgundy-900/80 bg-dark-950 py-16 text-sm text-burgundy-300/60">
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 md:grid-cols-4">
+    <div class="space-y-4">
+      <a href="#top" class="text-lg font-extrabold tracking-tight text-white">
+        ZE<span class="text-burgundy-500">E</span>KO
+      </a>
+      <p class="font-mono text-xs text-burgundy-300/50">
+        {SITE.owner}<br />Nemovitosti · Investice · Řešení složitých případů
+      </p>
+    </div>
+
+    <nav class="space-y-3" aria-label="Navigace v patičce">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Navigace</h2>
+      <ul class="space-y-2 text-xs">
+        <li><a href="#o-mne" class="transition-colors hover:text-white">O mně</a></li>
+        <li><a href="#specializace" class="transition-colors hover:text-white">Specializace</a></li>
+        <li><a href="#pripady" class="transition-colors hover:text-white">Případy z praxe</a></li>
+        <li><a href="#know-how" class="transition-colors hover:text-white">Know-how</a></li>
+      </ul>
+    </nav>
+
+    <div class="space-y-3">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Projekty</h2>
+      <ul class="space-y-2 text-xs">
+        <li>
+          <a href="#parkoviste" class="transition-colors hover:text-burgundy-400">
+            Parkoviště nemovitostí
+          </a>
+        </li>
+        <li>
+          <a
+            href={CONTACT.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="transition-colors hover:text-white">Instagram</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="space-y-3">
+      <h2 class="font-mono text-xs uppercase tracking-widest text-burgundy-200">Právní informace</h2>
+      <p class="text-xs leading-relaxed text-burgundy-300/40">
+        Veškeré údaje a firemní informace se řídí platnými právními předpisy ČR. Nejedná se o právní
+        poradenství.
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between border-t border-burgundy-900/50 px-6 pt-8 text-xs text-burgundy-300/40 sm:flex-row"
+  >
+    <span>&copy; {currentYear} ZEEKO — {SITE.owner}. Všechna práva vyhrazena.</span>
+    <span class="mt-2 font-mono sm:mt-0">{SITE.tagline}</span>
+  </div>
+</footer>

@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Stránka nenalezena | ZEEKO" description="Požadovaná stránka neexistuje." noindex>
+  <main
+    id="top"
+    class="flex min-h-[70vh] flex-col items-center justify-center bg-paper-900 px-6 text-center"
+  >
+    <span class="font-mono text-xs uppercase tracking-widest text-burgundy-400">Chyba 404</span>
+    <h1 class="mt-4 font-serif text-4xl font-extrabold text-burgundy-50 sm:text-6xl">
+      Tady nic není
+    </h1>
+    <p class="mt-4 max-w-md text-burgundy-100/70">
+      Stránka, kterou hledáte, neexistuje nebo se přesunula.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-flex items-center gap-2 rounded-full border border-burgundy-500/30 bg-gradient-to-r from-burgundy-700 to-burgundy-900 px-8 py-4 text-sm font-semibold text-white shadow-xl transition-all hover:-translate-y-0.5"
+    >
+      Zpět na úvod <span class="font-mono">&rarr;</span>
+    </a>
+  </main>
+  <Footer />
+</Base>

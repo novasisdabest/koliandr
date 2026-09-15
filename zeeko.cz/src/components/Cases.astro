@@ -1,0 +1,18 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import CaseCard from './CaseCard.astro';
+import { CASES } from '../data/content';
+---
+
+<section id="pripady" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+  <div class="mx-auto max-w-7xl px-6">
+    <SectionHeading
+      eyebrow="Praxe a výsledky"
+      title="Případy z praxe"
+      aside="Anonymizované a veřejně prezentované případy"
+    />
+    <div class="space-y-6">
+      {CASES.map((item) => <CaseCard {...item} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { SITUATIONS } from '../data/content';
+---
+
+<section id="pro-koho" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+  <div class="mx-auto max-w-7xl px-6">
+    <SectionHeading
+      eyebrow="Pro koho to je"
+      title="Situace, které řeším"
+      aside="Čím dřív se ozvete, tím víc možností zbývá"
+    />
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        SITUATIONS.map((situation) => (
+          <article class="rounded-3xl border border-burgundy-800/50 bg-dark-800 p-8 shadow-lg transition-all hover:border-burgundy-500/80">
+            <h3 class="text-lg font-bold text-white">{situation.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-burgundy-100/70">{situation.body}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <p
+      class="mt-10 rounded-2xl border border-burgundy-800/50 bg-dark-800/50 p-6 text-sm leading-relaxed text-burgundy-200/80"
+    >
+      Nevíte, jestli váš případ patří do některé z těchto kategorií? Napište ho vlastními slovy.
+      Posouzení je nezávazné a nic nestojí — a pokud řešení nedává smysl, řeknu vám to rovnou.
+    </p>
+  </div>
+</section>

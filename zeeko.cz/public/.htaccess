@@ -1,0 +1,80 @@
+# =============================================================================
+#  zeeko.cz — Active24 Webhosting (Apache / LiteSpeed)
+#  Soubor leží v public/ => Astro ho zkopíruje 1:1 do dist/ a deploy ho nahraje.
+# =============================================================================
+
+Options -Indexes
+DirectoryIndex index.html
+
+# -----------------------------------------------------------------------------
+# HTTPS + kanonická doména (bez www)
+# -----------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Bezpečnostní hlavičky
+# CSP je záměrně přísná — web nenačítá žádný externí skript ani font.
+# Pokud přidáš analytiku (Plausible/GA), musíš sem doplnit její doménu.
+# -----------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+  Header unset X-Powered-By
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Cache — Astro hashuje názvy assetů, takže je smíme zamknout na rok.
+# HTML se naopak nesmí cachovat, jinak deploy nikdo neuvidí.
+# -----------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|mjs|woff2|woff|avif|webp|png|jpe?g|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|xml|txt|json)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Komprese
+# -----------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml font/woff2
+</IfModule>
+
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/avif .avif
+  AddType image/webp .webp
+  AddCharset UTF-8 .html .css .js .json .xml .txt .svg
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Chybové stránky
+# -----------------------------------------------------------------------------
+ErrorDocument 404 /404.html

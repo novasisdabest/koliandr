@@ -1,0 +1,65 @@
+name: Deploy parkovistenemovitosti.cz
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'parkovistenemovitosti.cz/**'
+      - '.github/workflows/deploy-parkoviste.yml'
+  workflow_dispatch:
+
+# Dva deploye stejného webu naráz by si navzájem přepsaly FTP stav.
+concurrency:
+  group: deploy-parkoviste
+  cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: parkovistenemovitosti.cz
+
+jobs:
+  deploy:
+    name: Build & upload
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: parkovistenemovitosti.cz/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Build (astro check + astro build)
+        run: npm run build
+
+      - name: Guard — v dist nesmí zůstat žádný externí požadavek
+        run: |
+          if grep -rEo 'https?://[^"'"'"' )]+' dist/*.html \
+             | grep -vE 'schema\.org|parkovistenemovitosti.cz|wa\.me|instagram\.com|zeeko\.cz|parkovistenemovitosti\.cz|w3\.org'; then
+            echo "::error::Build obsahuje externí zdroj — poruší CSP v .htaccess."
+            exit 1
+          fi
+          echo "OK: žádné externí zdroje."
+
+      - name: Upload via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.PARKOVISTE_FTP_HOST }}
+          username: ${{ secrets.PARKOVISTE_FTP_USER }}
+          password: ${{ secrets.PARKOVISTE_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./parkovistenemovitosti.cz/dist/
+          server-dir: ${{ secrets.PARKOVISTE_FTP_REMOTE_DIR }}
+          # NIKDY nezapínat: smaže celý docroot včetně věcí, co tam nahrál někdo ručně.
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

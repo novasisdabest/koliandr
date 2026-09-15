@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { SITE } from '../data/site';
+
+// Portrét zatím v repu není. `import.meta.glob` ho najde, jakmile ho tam
+// nahraješ jako src/assets/portrait.{png,jpg,jpeg,webp} — a do té doby
+// build NESPADNE, jen se vykreslí monogramový placeholder.
+const found = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/portrait.{png,jpg,jpeg,webp,avif}',
+  { eager: true },
+);
+const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
+---
+
+<section class="relative overflow-hidden bg-paper-900 pb-16 pt-8 lg:pb-24 lg:pt-16">
+  <div class="texture-grain pointer-events-none absolute inset-0 opacity-10 mix-blend-screen"></div>
+  <div
+    class="pointer-events-none absolute left-1/4 top-0 h-[800px] w-[800px] rounded-full bg-burgundy-900/20 blur-[150px]"
+  >
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
+    <div
+      class="relative mx-auto flex w-full max-w-6xl flex-col rounded-sm bg-paper-700 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] lg:flex-row lg:before:absolute lg:before:-inset-4 lg:before:-z-10 lg:before:rounded-xl lg:before:bg-paper-500 lg:before:shadow-2xl lg:before:content-['']"
+    >
+      <!-- Levá stránka: text -->
+      <div
+        class="book-crease relative flex w-full flex-col justify-center overflow-hidden bg-gradient-to-br from-paper-600 to-paper-700 p-8 sm:p-12 lg:w-1/2 lg:rounded-l-sm lg:p-16 xl:p-20"
+      >
+        <div
+          class="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent"
+        >
+        </div>
+
+        <div class="relative z-10 space-y-8">
+          <p
+            class="inline-flex items-center gap-2.5 rounded-full border border-burgundy-700/50 bg-dark-900/50 px-4 py-1.5 font-mono text-xs tracking-wide text-burgundy-200"
+          >
+            <span class="h-2 w-2 rounded-full bg-burgundy-500 motion-safe:animate-pulse"></span>
+            ZDENĚK KOLIANDR — INVESTOR &amp; VYJEDNAVAČ
+          </p>
+
+          <h1
+            class="font-serif text-4xl font-extrabold leading-[1.1] tracking-tight text-burgundy-50 sm:text-5xl lg:text-6xl"
+          >
+            Nemovitosti jsou moje práce.<br />
+            <span
+              class="bg-gradient-to-r from-burgundy-300 to-burgundy-100 bg-clip-text font-serif italic text-transparent"
+            >
+              Složité případy
+            </span><br />
+            moje specializace.
+          </h1>
+
+          <p class="max-w-md text-lg font-normal leading-relaxed text-burgundy-100/70">
+            Více než 20 let se pohybuji v realitách a specializuji se na nemovitosti, kde nestačí jen
+            podívat se na cenu a list vlastnictví. Exekuce, zástavy, dluhy nebo insolvence.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 pt-4">
+            <a
+              href="#kontakt"
+              class="rounded-full border border-burgundy-500/30 bg-gradient-to-r from-burgundy-700 to-burgundy-900 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-black/50 transition-all hover:-translate-y-0.5 hover:from-burgundy-600 hover:to-burgundy-800"
+            >
+              Probrat konkrétní případ
+            </a>
+            <a
+              href="#o-mne"
+              class="rounded-full px-8 py-4 text-sm font-semibold text-burgundy-200 underline decoration-burgundy-700/50 underline-offset-4 transition-all hover:text-white hover:decoration-burgundy-400"
+            >
+              Poznat můj příběh
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pravá stránka: fotografie -->
+      <div
+        class="book-shadow relative flex w-full items-center justify-center overflow-hidden bg-paper-800 lg:w-1/2 lg:rounded-r-sm"
+      >
+        <div class="group relative h-full min-h-[400px] w-full sm:min-h-[500px] lg:min-h-full">
+          {
+            portrait ? (
+              <Image
+                src={portrait}
+                alt={`${SITE.owner} — ${SITE.role}`}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                format="avif"
+                loading="eager"
+                fetchpriority="high"
+                class="absolute inset-0 h-full w-full object-cover object-top opacity-90 transition-transform duration-1000 group-hover:scale-105 lg:object-center"
+              />
+            ) : (
+              <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-burgundy-950 to-paper-800">
+                <span class="font-serif text-7xl font-bold text-burgundy-200/30">ZK</span>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-burgundy-300/40">
+                  src/assets/portrait.jpg
+                </span>
+              </div>
+            )
+          }
+
+          <div class="pointer-events-none absolute inset-0 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]"></div>
+          <div
+            class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_rgba(26,11,14,0.6)_100%)]"
+          >
+          </div>
+          <div
+            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent lg:hidden"
+          >
+          </div>
+
+          <div
+            class="absolute bottom-6 right-6 z-10 rounded-lg border border-burgundy-700/30 bg-dark-900/80 px-4 py-2 text-right opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100 lg:bottom-8 lg:right-8"
+          >
+            <p class="text-sm font-bold text-white">{SITE.owner}</p>
+            <p class="font-mono text-[10px] text-burgundy-300">{SITE.role}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappHref, mailtoHref, CONTACT } from '../data/site';
+---
+
+<!-- overflow-hidden: dekorativní záře je 600px široká a na mobilu
+     jinak roztáhne stránku o 105px doprava -->
+<section id="kontakt" class="overflow-hidden border-t border-burgundy-900/50 bg-dark-800 py-24">
+  <!-- Pozor: v původní šabloně byly max-w-7xl i max-w-3xl na jednom elementu,
+       takže užší limit nikdy neplatil. Tady je vnořený wrapper. -->
+  <div class="relative mx-auto max-w-7xl px-6">
+    <div
+      class="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-burgundy-700/10 blur-[120px]"
+    >
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-3xl text-center">
+      <span class="font-mono text-xs uppercase tracking-widest text-burgundy-400">Kontakt</span>
+      <h2 class="mt-3 font-serif text-3xl font-extrabold tracking-tight text-burgundy-50 sm:text-5xl">
+        Pojďme probrat váš případ
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-burgundy-100/80">
+        Ozvěte se přímo. Nejrychlejší a nejpohodlnější domluva je přes WhatsApp nebo e-mail.
+      </p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <a
+          href={whatsappHref()}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 rounded-full border border-burgundy-500/30 bg-gradient-to-r from-burgundy-700 to-burgundy-900 px-8 py-4 text-sm font-semibold text-white shadow-xl shadow-black/50 transition-all hover:-translate-y-0.5 hover:from-burgundy-600 hover:to-burgundy-800"
+        >
+          <WhatsAppIcon class="h-4 w-4 text-emerald-400" />
+          Napsat na WhatsApp
+        </a>
+        <a
+          href={mailtoHref()}
+          class="rounded-full border border-burgundy-700/50 bg-dark-900 px-8 py-4 text-sm font-semibold text-burgundy-200 shadow-lg backdrop-blur-sm transition-all hover:bg-dark-800"
+        >
+          Napsat e-mail
+        </a>
+      </div>
+
+      <p class="mt-8 font-mono text-xs text-burgundy-300/60">
+        <a href={CONTACT.phoneHref} class="hover:text-burgundy-200">{CONTACT.phoneDisplay}</a>
+        <span class="mx-2">·</span>
+        <a href={mailtoHref()} class="hover:text-burgundy-200">{CONTACT.email}</a>
+      </p>
+    </div>
+  </div>
+</section>

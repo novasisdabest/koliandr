@@ -1,0 +1,61 @@
+---
+import { ABOUT_FACTS } from '../data/content';
+---
+
+<section id="o-mne" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="space-y-6 lg:col-span-5">
+        <span class="font-mono text-xs uppercase tracking-widest text-burgundy-400">O mně</span>
+        <h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          Kdo je Zdeněk Koliandr
+        </h2>
+
+        <dl class="space-y-4 rounded-2xl border border-burgundy-800/50 bg-dark-800 p-6">
+          {
+            ABOUT_FACTS.map((fact, index) => (
+              <div
+                class:list={[
+                  'flex items-center justify-between py-2',
+                  index < ABOUT_FACTS.length - 1 && 'border-b border-burgundy-900/50',
+                ]}
+              >
+                <dt class="font-mono text-xs text-burgundy-200/70">{fact.label}</dt>
+                <dd
+                  class:list={[
+                    'font-mono text-sm font-semibold',
+                    fact.accent ? 'text-burgundy-400' : 'text-white',
+                  ]}
+                >
+                  {fact.value}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div class="space-y-6 text-lg leading-relaxed text-burgundy-50/80 lg:col-span-7">
+        <p>
+          Více než dvacet let se pohybuji na pomezí nemovitostí, financí a právně složitých transakcí.
+          Zajímají mě případy, kde běžný odhad ceny nestačí — nemovitosti zatížené exekucemi,
+          zástavními právy, dluhy nebo insolvencí, kde rozhoduje pořadí věřitelů, skutečná výše
+          závazků a to, jestli lze celý proces bezpečně dovést do konce.
+        </p>
+        <p>
+          V praxi to znamená posoudit riziko dřív, než se obchod uzavře, vyjednávat s vlastníky,
+          věřiteli i exekutory, a spolupracovat s advokáty a dalšími odborníky tam, kde jde o právní
+          detail. Vlastní zkušenost s desítkami podobných případů je hlavní nástroj, se kterým
+          pracuji.
+        </p>
+
+        <p
+          class="mt-6 rounded-2xl border-l-4 border-burgundy-600 bg-gradient-to-r from-burgundy-900/30 to-transparent p-6 text-base font-medium text-burgundy-200"
+        >
+          Nejsem advokát. Nejsem realitní makléř. Jsem investor a vyjednavač, který se dlouhodobě
+          pohybuje na pomezí nemovitostí, financí a právně složitých transakcí.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

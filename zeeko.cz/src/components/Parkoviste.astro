@@ -1,0 +1,71 @@
+---
+import { CONTACT } from '../data/site';
+
+const OPTIONS = [
+  {
+    label: 'Možnost A',
+    title: 'Zaparkovat nemovitost',
+    body: 'Výkup → nájem → možnost budoucího odkupu zpět.',
+  },
+  {
+    label: 'Možnost B',
+    title: 'Zaparkovat finanční problém',
+    body: 'Zajištěná zápůjčka proti nemovitosti.',
+  },
+] as const;
+---
+
+<section id="parkoviste" class="border-t border-burgundy-900/50 bg-dark-900 py-24">
+  <div class="mx-auto max-w-7xl px-6">
+    <div
+      class="relative overflow-hidden rounded-sm border border-burgundy-700/30 bg-gradient-to-br from-paper-600 to-paper-700 p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.9)] sm:p-14 lg:p-20"
+    >
+      <div class="pointer-events-none absolute -right-24 -top-24 h-[500px] w-[500px] rounded-full bg-burgundy-600/10 blur-[100px]"></div>
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.01] to-transparent"></div>
+
+      <div class="relative z-10 max-w-3xl space-y-6">
+        <span
+          class="inline-block rounded-full border border-burgundy-600/50 bg-dark-900/80 px-4 py-1.5 font-mono text-xs uppercase tracking-widest text-burgundy-200 shadow-inner"
+        >
+          Samostatný projekt
+        </span>
+        <h2 class="font-serif text-3xl font-extrabold tracking-tight text-burgundy-50 sm:text-5xl">
+          Parkoviště nemovitostí
+        </h2>
+        <p class="text-lg leading-relaxed text-burgundy-100/90">
+          Když potřebujete peníze nebo čas, nemusíte dělat definitivní rozhodnutí. Parkoviště
+          nemovitostí je projekt zaměřený na majitele nemovitostí, kteří řeší dluhy, exekuce,
+          hypotéku, zástavu nebo potřebují získat peníze a zároveň hledají možnost, jak si zachovat
+          bydlení nebo získat čas.
+        </p>
+      </div>
+
+      <div class="relative z-10 mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+        {
+          OPTIONS.map((option) => (
+            <div class="space-y-3 rounded-xl border border-burgundy-800/50 bg-paper-800/80 p-8 shadow-inner backdrop-blur-md">
+              <span class="font-mono text-xs text-burgundy-400">{option.label}</span>
+              <h3 class="text-xl font-bold text-white">{option.title}</h3>
+              <p class="text-sm leading-relaxed text-burgundy-200/80">{option.body}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <div
+        class="relative z-10 mt-12 flex flex-wrap items-center gap-6 border-t border-burgundy-800/50 pt-8"
+      >
+        <a
+          href={CONTACT.parkoviste}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-burgundy-100 px-8 py-4 text-sm font-bold text-dark-900 shadow-xl transition-all hover:-translate-y-0.5 hover:bg-white"
+        >
+          <span>Navštívit Parkoviště nemovitostí</span>
+          <span class="font-mono">&rarr;</span>
+        </a>
+        <span class="font-mono text-sm text-burgundy-300/80">parkovistenemovitosti.cz</span>
+      </div>
+    </div>
+  </div>
+</section>
