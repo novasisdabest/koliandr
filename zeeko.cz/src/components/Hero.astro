@@ -73,7 +73,12 @@ const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
             podívat se na cenu a list vlastnictví. Exekuce, zástavy, dluhy nebo insolvence.
           </p>
 
-          <div class="flex flex-wrap items-center gap-4 pt-4 lg:pt-[clamp(0.25rem,1.5vh,1rem)]">
+          <!-- Na telefonu na střed, od `sm` zpátky doleva k nadpisu.
+                 `flex-wrap` navíc znamená, že na úzkém displeji tlačítka
+                 stojí pod sebou a vycentrují se obě. -->
+            <div
+              class="flex flex-wrap items-center justify-center gap-4 pt-4 sm:justify-start lg:pt-[clamp(0.25rem,1.5vh,1rem)]"
+            >
             <a
               href="#kontakt"
               class="rounded-full border border-burgundy-500/30 bg-gradient-to-r from-burgundy-700 to-burgundy-900 px-8 py-4 text-sm font-semibold lg:py-[clamp(0.75rem,1.7vh,1rem)] text-on-accent elevation-btn transition-all hover:-translate-y-0.5 hover:from-burgundy-600 hover:to-burgundy-800"
@@ -123,7 +128,7 @@ const portrait: ImageMetadata | undefined = Object.values(found)[0]?.default;
           >
           </div>
           <div
-            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent lg:hidden"
+            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-photo-fade via-transparent to-transparent lg:hidden"
           >
           </div>
 

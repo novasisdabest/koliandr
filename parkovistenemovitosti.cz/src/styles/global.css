@@ -62,6 +62,11 @@
      tma, ve světlém světlá vínová — jinak by z nich byl šedý opar. */
   /* Zvýrazněná fráze v nadpisu. Nemůže brát burgundy-300/100 — ty jsou ve
      světlém režimu inkousty, takže by z gradientu byla šeď. */
+  /* Zesvětlení pod fotkou na mobilu. V tmavém režimu vytahuje spodek
+     fotky do pozadí stránky; ve světlém by z něj byl bílý závoj přes
+     portrét, takže je průhledné. */
+  --color-photo-fade: var(--t-photo-fade);
+
   --color-hero-from: var(--t-hero-from);
   --color-hero-to: var(--t-hero-to);
 
@@ -128,6 +133,7 @@
   --t-chip-ink: #f4c5cd;
   --t-chip-line: rgb(140 36 56 / 0.5);
 
+  --t-photo-fade: rgb(26 11 14 / 0.8);
   --t-hero-from: #ea9caa;
   --t-hero-to: #fbe7ea;
 
@@ -193,6 +199,7 @@
   --t-chip-ink: #5a1926;
   --t-chip-line: #f4c5cd;
 
+  --t-photo-fade: rgb(255 255 255 / 0);
   --t-hero-from: #6e1b2c;
   --t-hero-to: #c65b6c;
 
