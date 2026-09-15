@@ -6,34 +6,152 @@
    (--color-burgundy-600 => bg-burgundy-600 / text-burgundy-600 / border-…).
 --------------------------------------------------------------------------- */
 @theme {
-  --color-burgundy-50: #fdf2f4;
-  --color-burgundy-100: #fbe7ea;
-  --color-burgundy-200: #f4c5cd;
-  --color-burgundy-300: #ea9caa;
-  --color-burgundy-400: #dd697f;
-  --color-burgundy-500: #c65b6c;
-  --color-burgundy-600: #8c2438;
-  --color-burgundy-700: #6e1b2c;
-  --color-burgundy-800: #5a1926;
-  --color-burgundy-900: #400e18;
-  --color-burgundy-950: #2b070f;
+  /* Paleta ukazuje na přepínatelné proměnné (viz :root níže).
+     TMAVÉ hodnoty jsou identické s původním návrhem — tmavý režim se
+     nezměnil ani o odstín. Světlý režim jen dosadí jiné hodnoty. */
+  --color-burgundy-50: var(--t-burgundy-50);
+  --color-burgundy-100: var(--t-burgundy-100);
+  --color-burgundy-200: var(--t-burgundy-200);
+  --color-burgundy-300: var(--t-burgundy-300);
+  --color-burgundy-400: var(--t-burgundy-400);
+  --color-burgundy-500: var(--t-burgundy-500);
+  --color-burgundy-600: var(--t-burgundy-600);
+  --color-burgundy-700: var(--t-burgundy-700);
+  --color-burgundy-800: var(--t-burgundy-800);
+  --color-burgundy-900: var(--t-burgundy-900);
+  --color-burgundy-950: var(--t-burgundy-950);
 
-  /* Tmavé plochy s vínovým nádechem */
-  --color-dark-700: #381c22; /* karty */
-  --color-dark-800: #261216; /* sekce */
-  --color-dark-900: #1a0b0e; /* pozadí */
-  --color-dark-950: #0f0508; /* patička — v původní šabloně chyběl, footer byl průhledný */
+  /* Vlásková linka má vlastní token: `burgundy-900` slouží zároveň jako
+     okraj i jako tmavý konec gradientu tlačítka. Jedna proměnná to ve
+     světlém režimu neuveze — tlačítko musí zůstat tmavě vínové, linka ne. */
+  --color-line: var(--t-line);
+  --color-line-strong: var(--t-line-strong);
+  --color-line-soft: var(--t-line-soft);
 
-  /* Papírové odstíny „knihy“ v heru */
-  --color-paper-900: #14080a;
-  --color-paper-800: #221215;
-  --color-paper-700: #2a171a;
-  --color-paper-600: #382025;
-  --color-paper-500: #1f1013;
+  /* Plochy */
+  --color-dark-700: var(--t-dark-700); /* karty */
+  --color-dark-800: var(--t-dark-800); /* sekce */
+  --color-dark-900: var(--t-dark-900); /* pozadí */
+  --color-dark-950: var(--t-dark-950); /* patička */
+
+  /* Odstíny „knihy“ v heru */
+  --color-paper-900: var(--t-paper-900);
+  --color-paper-800: var(--t-paper-800);
+  --color-paper-700: var(--t-paper-700);
+  --color-paper-600: var(--t-paper-600);
+  --color-paper-500: var(--t-paper-500);
+
+  /* Bílá jako „nejsilnější inkoust“ — ve světlém režimu je to čerň.
+     Text NA vínovém tlačítku používá --color-on-accent, ten bílý zůstává. */
+  --color-white: var(--t-white);
+  --color-slate-200: var(--t-slate-200);
+  --color-slate-300: var(--t-slate-300);
+  --color-slate-400: var(--t-slate-400);
+  --color-on-accent: #ffffff;
+
+  /* Čip s tmavým podkladem (čísla pilířů, štítek případu). Nemůže brát
+     burgundy-900 — ta musí ve světlém režimu zůstat tmavá kvůli gradientu
+     tlačítka, zatímco čip má na papíře zesvětlat. */
+  --color-chip: var(--t-chip);
+  --color-chip-ink: var(--t-chip-ink);
+  --color-shade: var(--t-shade);
 
   --font-sans: "Inter Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif: "Playfair Display Variable", Georgia, "Times New Roman", serif;
+}
+
+
+/* ===========================================================================
+   DVA REŽIMY
+   Tmavý = výchozí, hodnoty odpovídají původnímu návrhu 1:1.
+   Světlý = teplý papír, ne studená bílá; text je vínově tónovaná čerň,
+   protože čistá #000 vedle vínové působí mrtvě.
+   Přepíná se atributem data-theme na <html> (viz skript v Base.astro).
+=========================================================================== */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --t-burgundy-50: #fdf2f4;
+  --t-burgundy-100: #fbe7ea;
+  --t-burgundy-200: #f4c5cd;
+  --t-burgundy-300: #ea9caa;
+  --t-burgundy-400: #dd697f;
+  --t-burgundy-500: #c65b6c;
+  --t-burgundy-600: #8c2438;
+  --t-burgundy-700: #6e1b2c;
+  --t-burgundy-800: #5a1926;
+  --t-burgundy-900: #400e18;
+  --t-burgundy-950: #2b070f;
+
+  --t-dark-700: #381c22;
+  --t-dark-800: #261216;
+  --t-dark-900: #1a0b0e;
+  --t-dark-950: #0f0508;
+
+  --t-paper-900: #14080a;
+  --t-paper-800: #221215;
+  --t-paper-700: #2a171a;
+  --t-paper-600: #382025;
+  --t-paper-500: #1f1013;
+
+  --t-white: #ffffff;
+  --t-slate-200: oklch(92.9% 0.013 255.508);
+  --t-slate-300: oklch(86.9% 0.022 252.894);
+  --t-slate-400: oklch(70.4% 0.04 256.788);
+  --t-shade: #000000;
+
+  /* shodné s původním border-burgundy-900/50 resp. -800/50 a -700/50 */
+  --t-line: rgb(64 14 24 / 0.5);
+  --t-line-strong: rgb(90 25 38 / 0.5);
+  --t-line-soft: rgb(110 27 44 / 0.5);
+
+  /* shodné s původním bg-burgundy-900/80 + text-burgundy-200 */
+  --t-chip: rgb(64 14 24 / 0.8);
+  --t-chip-ink: #f4c5cd;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  /* Vínová zůstává značkou. Světlé odstíny (50–300) se ale v tmavém režimu
+     používají jako TEXT — tady musí ztmavnout, jinak zmizí na papíře. */
+  --t-burgundy-50: #24070d;
+  --t-burgundy-100: #2c181c;
+  --t-burgundy-200: #342024;
+  --t-burgundy-300: #3d272c;
+  --t-burgundy-400: #8c2438;
+  --t-burgundy-500: #a33448;
+  --t-burgundy-600: #8c2438;
+  --t-burgundy-700: #6e1b2c;
+  --t-burgundy-800: #f2e3e6;
+  --t-burgundy-900: #400e18;
+  --t-burgundy-950: #fdf2f4;
+
+  --t-dark-700: #ebe0e2;
+  --t-dark-800: #f4eeee;
+  --t-dark-900: #fbf8f8;
+  --t-dark-950: #ece2e3;
+
+  --t-paper-900: #f7f1f1;
+  --t-paper-800: #f0e8e8;
+  --t-paper-700: #fffdfd;
+  --t-paper-600: #fff7f7;
+  --t-paper-500: #e0d3d5;
+
+  --t-white: #24070d;
+  --t-slate-200: #3a2b2e;
+  --t-slate-300: #5c4a4e;
+  --t-slate-400: #7a666a;
+  --t-shade: #5a1926;
+
+  --t-line: rgb(90 25 38 / 0.14);
+  --t-line-strong: rgb(90 25 38 / 0.2);
+  --t-line-soft: rgb(90 25 38 / 0.16);
+
+  --t-chip: #fbe7ea;
+  --t-chip-ink: #6e1b2c;
 }
 
 @layer base {
@@ -66,6 +184,16 @@
     outline: 2px solid var(--color-burgundy-400);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* Přepnutí režimu se má prolnout, ale jen barvy a jen krátce. */
+  html.theme-switching,
+  html.theme-switching body * {
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      fill 180ms ease;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -116,6 +244,21 @@
         rgb(0 0 0 / 0) 100%
       );
     }
+  }
+
+  /* Kurzor psacího stroje — tvrdý přeskok, ne plynulé stmívání. */
+  @keyframes caret-blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+  .caret-blink {
+    animation: caret-blink 1s steps(1) infinite;
   }
 
   /* Papírová zrnitost — nahrazuje externí požadavek na transparenttextures.com.

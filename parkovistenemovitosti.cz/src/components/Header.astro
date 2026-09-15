@@ -1,5 +1,6 @@
 ---
 import WhatsAppButton from './WhatsAppButton.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import { NAV } from '../data/site';
 ---
 
@@ -23,6 +24,7 @@ import { NAV } from '../data/site';
       <!-- Obal řídí viditelnost: `hidden sm:inline-flex` přímo na tlačítku
            prohrává s `inline-flex` z varianty, protože Tailwind řadí
            display utility podle své osnovy, ne podle pořadí v atributu. -->
+      <ThemeToggle />
       <span class="hidden sm:inline-block">
         <WhatsAppButton />
       </span>

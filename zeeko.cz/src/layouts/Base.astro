@@ -16,6 +16,11 @@ interface Props {
 
 const { title, description, ogImage = '/og-zeeko.jpg', noindex = false } = Astro.props;
 
+// Náhledový build (Cloudflare Pages apod.) se NESMÍ dostat do vyhledávačů —
+// jinak si dočasná URL konkuruje s ostrou doménou jako duplicitní obsah.
+// Zapíná se proměnnou prostředí PUBLIC_PREVIEW=true, produkce ji nemá.
+const isPreview = import.meta.env.PUBLIC_PREVIEW === 'true';
+
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
 
@@ -47,7 +52,7 @@ const personSchema = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {(noindex || isPreview) && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.name} />
@@ -58,22 +63,43 @@ const personSchema = {
     <meta property="og:locale" content="cs_CZ" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <meta name="theme-color" content="#1a0b0e" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#1a0b0e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbf8f8" media="(prefers-color-scheme: light)" />
+
+    <!-- Musí běžet PŘED prvním vykreslením, jinak tmavý web na okamžik
+         blikne i tomu, kdo má uloženou světlou variantu. Proto je inline
+         a synchronní, ne v externím souboru. -->
+    <script is:inline>
+      (() => {
+        let stored = null;
+        try {
+          stored = localStorage.getItem('zeeko-theme');
+        } catch {}
+        const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = stored ?? system;
+      })();
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
   </head>
   <body
-    class="bg-dark-900 font-sans text-slate-200 antialiased selection:bg-burgundy-600 selection:text-white"
+    class="bg-dark-900 font-sans text-slate-200 antialiased selection:bg-burgundy-600 selection:text-on-accent"
   >
     <a
       href="#top"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-burgundy-600 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-burgundy-600 focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-accent"
     >
       Přeskočit na obsah
     </a>
+    {
+      isPreview && (
+        <p class="bg-burgundy-600 px-6 py-2 text-center font-mono text-xs text-on-accent">
+          Náhled rozpracovaného webu — ostrá adresa bude jiná.
+        </p>
+      )
+    }
     <slot />
   </body>
 </html>
